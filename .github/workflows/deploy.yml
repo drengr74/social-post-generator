@@ -49,6 +49,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # Сообщаем Dokploy, что образы обновлены и приложение можно перезапустить.
-      - name: Trigger Dokploy webhook
-        run: curl --fail --silent --show-error --request POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}"
+      # Просим Dokploy подтянуть новый образ API.
+      - name: Trigger backend webhook
+        run: curl --fail --silent --show-error --request POST "${{ secrets.BACKEND_WEBHOOK_URL }}"
+
+      # Просим Dokploy подтянуть новый образ интерфейса.
+      - name: Trigger frontend webhook
+        run: curl --fail --silent --show-error --request POST "${{ secrets.FRONTEND_WEBHOOK_URL }}"
